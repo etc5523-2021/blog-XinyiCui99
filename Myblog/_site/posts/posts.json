@@ -1,0 +1,36 @@
+[
+  {
+    "path": "posts/2021-08-31-my-first-post/",
+    "title": "My first post",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Xinyi Cui",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2021-08-31",
+    "categories": [],
+    "contents": "\nThis is my first post\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-08-31T16:33:41+08:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to Xinyi Cui's Blog",
+    "description": "Welcome to our new blog, Xinyi Cui's Blog. We hope you enjoy \nreading what we have to say!",
+    "author": [
+      {
+        "name": "Xinyi Cui",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2021-08-31",
+    "categories": [],
+    "contents": "\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-08-31T16:17:47+08:00",
+    "input_file": {}
+  }
+]
