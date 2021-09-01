@@ -7,3 +7,5 @@ description: |
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+This blog is for ETC 5523 Communicating with data Assignments in Monash University.

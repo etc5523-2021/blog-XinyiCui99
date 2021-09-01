@@ -1,7 +1,7 @@
 ---
-title: "My first post"
+title: "COVID19 in Germany"
 description: |
-  A short description of the post.
+  This post is about COVID19 in Germany
 author:
   - name: Xinyi Cui
     url: https://example.com/norajones
@@ -14,8 +14,157 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(tidycovid19)
+library(kableExtra)
+library(DT)
+library(plotly)
 ```
 
-This is my first post
+```{css ,echo = FALSE}
+h1{
+  color:  #5A91A3 ;
+  font-size: 45px;
+  font-family:"Times New Roman", Times, serif;
+}
+h2{
+  color: #5A91A3 ;
+  font-size: 18px;
+  font-family:"Times New Roman", Times, serif;
+}
+thead {
+  background-color: #006DAE;
+  color: white;
+}
+```
 
 
+
+# Introdution
+
+From the start of 2020, the word "COVID19" had suddenly entered in our life and made unimaginable changes to almost everyone. Many places around the world experienced lockdown, online classes, work from home etc. In this battle with COVID19, we lost millions of lives, yet the spread of the virus has not been stopped. In this post, we will have a closer look at COVID19 in Germany.
+
+## COVID19
+
+According to the World Health Organisation (WHO), COVID-19 is the disease caused by a new coronavirus called SARS-CoV-2.  A person can be infected when aerosols or droplets containing the virus are inhaled or come directly into contact with the eyes, nose, or mouth. In addition, anyone can get sick with COVID-19 and become seriously ill or die at any age. 
+
+## Germany
+
+Germany is a developed high income Western European country. Germany has the world's oldest universal health care system. (Health Care Systems in Transition: Germany,2000)
+
+# Data
+## Data description
+
+The data comes from the **tidycovid19** package hosted on [Github](https://github.com/joachim-gassen/tidycovid19), which provides transparent and various data sources at the country-day level. In this post only 6 out of 35 variables are included for the analysis. The table below is the variables and there corresponding description.
+
+
+```{r}
+Germany <- download_merged_data(cached = TRUE, silent = TRUE) %>% 
+  filter(country == "Germany") %>% 
+  select(c(date:recovered,total_vaccinations )) %>% 
+  mutate(new_cases = confirmed - lag(confirmed),
+         new_deaths = deaths - lag(deaths),
+         daily_recover = recovered - lag(recovered),
+         daily_vaccination = total_vaccinations-lag(total_vaccinations))
+```
+
+```{r}
+data_description <- data.frame(Variables = names(Germany),
+                               Description = c("Date values",
+                                               "Confimed cases recorded on the date(accumulative)",
+                                               "Death cases recorded on the date(accumulative)",
+                                               "Recovered cases recorded on the date(accumulative)",
+                                               "Number of vaccinations injected recorded on the date(accumulative)",
+                                               "New cases recorded on the date",
+                                               "New deaths recored on the date",
+                                               "Recovered case recored on the date",
+                                               "Vaccinations injected recored on the data"))
+
+datatable(data_description, options = list(pageLength = 5), class = "cell-border stripe",
+          caption = "Variable and variable description")
+```
+
+## Data source
+
+The variables used are from authoritative data sources:
+
+ - Covid-19 data from the [Johns Hopkins University CSSE Github Repo](https://github.com/CSSEGISandData/COVID-19)
+ - Covid-19 case data provided by the [European Centre for Disease Prevention and Control](https://www.ecdc.europa.eu/en/covid-19/data)
+ - Government measures dataset provided by the Assessment Capacities Project [ACAPS](https://www.acaps.org/covid-19-government-measures-dataset)
+ - [Oxford](https://www.bsg.ox.ac.uk/research/research-projects/covid-19-government-response-tracker) Covid-19 Government Response Tracker.
+
+ 
+
+# Numeric summary statistics
+
+The table below are the numeric summary statistics for **new_cases**, **new_deaths** and **daily_recover**.
+
+```{r}
+numerical <- data.frame(
+  Variables = c("new_cases","new_deaths","daily_recover","daily_vaccination"),
+  Mean = c(round(mean(Germany$new_cases, na.rm = TRUE)),
+           round(mean(Germany$new_deaths, na.rm = TRUE)),
+           round(mean(Germany$daily_recover, na.rm = TRUE)),
+           round(mean(Germany$daily_vaccination, na.rm = TRUE))),
+  Max = c(round(max(Germany$new_cases, na.rm = TRUE)),
+          round(max(Germany$new_deaths, na.rm = TRUE)),
+          round(max(Germany$daily_recover, na.rm = TRUE)),
+           round(max(Germany$daily_vaccination, na.rm = TRUE))),
+  SD = c(round(sd(Germany$new_cases, na.rm = TRUE)),
+          round(sd(Germany$new_deaths, na.rm = TRUE)),
+         round(sd(Germany$daily_recover, na.rm = TRUE)),
+          round(sd(Germany$daily_vaccination, na.rm = TRUE)))
+)
+
+numerical %>% 
+kable(caption = "Statistics summary for new cases and new deaths" ) %>% 
+   kable_styling(bootstrap_options = c("striped","hover"))
+```
+
+
+
+## Daily trend in Germany
+```{r fig.width=60, fig.height=5}
+p1 <- ggplot(Germany,
+       aes(x = date,
+           y = new_cases))+
+  geom_line()+
+  ggtitle("Daily cases in Germany")+
+  scale_x_date(date_breaks = "60 days",date_labels = "%y-%m-%d")+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle=20, hjust = 1))+
+  labs(x = "Date", y = "Daily COVID19 cases")
+
+ggplotly(p1)
+  
+```
+
+The graph above is the trend for daily new cases in Germany from 2020-01-23. 
+
+- Germany had two major COVID breakout and one small breakout since Jan 2020.
+- From October 2020 the cases started to rise and reached the peak on 2020-12-20 with 49044 new cases.
+- Daily cases started to decrease from 2021-05-11, however there is an increase trend started from August 2021.
+- There is a possibility to have the fourth COVID breakout from August 2021.
+
+
+# German Government policy to combat COVID19
+
+
+
+# Reference
+
+ C. Sievert. Interactive Web-Based Data Visualization with R, plotly, and shiny. Chapman and Hall/CRC
+  Florida, 2020.
+
+ Hao Zhu (2021). kableExtra: Construct Complex Table with 'kable' and Pipe Syntax. R package version
+  1.3.4. https://CRAN.R-project.org/package=kableExtra
+
+
+ Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
+  https://doi.org/10.21105/joss.01686
+
+
+ Yihui Xie, Joe Cheng and Xianying Tan (2021). DT: A Wrapper of the JavaScript Library 'DataTables'. R
+  package version 0.18. https://CRAN.R-project.org/package=DT
+  
+Health Care Systems in Transition: Germany (PDF). European Observatory on Health Care Systems. 2000. p. 8. Archived (PDF) from the original on 13 May 2011.
