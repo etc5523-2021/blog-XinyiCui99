@@ -6,14 +6,14 @@
       "description": "Some additional details about the blog",
       "author": [],
       "contents": "\nThis blog is for ETC 5523 Communicating with data Assignments in Monash University.\n\n\n\n",
-      "last_modified": "2021-09-02T20:15:45+08:00"
+      "last_modified": "2021-09-02T20:32:12+08:00"
     },
     {
       "path": "index.html",
       "title": "Xinyi Cui's Blog",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-09-02T20:15:45+08:00"
+      "last_modified": "2021-09-02T20:32:12+08:00"
     }
   ],
   "collections": ["posts/posts.json"]

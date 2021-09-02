@@ -1,7 +1,7 @@
 ---
 title: "COVID-19 in Germany"
 description: |
-  This post is about COVID19 in Germany
+  This post is about COVID-19 situation in Germany
 author:
   - name: Xinyi Cui
 date: 08-31-2021
@@ -22,8 +22,6 @@ library(plotly)
 library(sparkline)
 library(lubridate)
 ```
-
-
 
 # Introdution
 
@@ -69,7 +67,7 @@ datatable(data_description, options = list(pageLength = 5), class = "cell-border
           caption = "Variable and variable description")
 ```
 
-# Data source
+## Data source
 
 The variables used are from authoritative data sources:
 
@@ -80,7 +78,7 @@ The variables used are from authoritative data sources:
 
  
 
-# Numeric summary statistics
+## Numeric summary statistics
 
 The table below are the numeric summary statistics for **new_cases**, **new_deaths**, **daily_recover** and **daily_vaccination**.
 
@@ -106,9 +104,8 @@ kable(caption = "Statistics summary for new cases and new deaths" ) %>%
    kable_styling(bootstrap_options = c("striped","hover"))
 ```
 
-#Analysis
 
-## Trend in the table
+# Analysis: Trend in the table
 
 ```{r}
 trend <- Germany %>% 
@@ -156,7 +153,6 @@ p1 <- ggplot(Germany,
 ggplotly(p1)
   
 ```
-
 The graph above is the trend for daily new cases in Germany from 2020-01-23. 
 
 - Germany had two major COVID breakout and one small breakout since Jan 2020.
@@ -172,9 +168,9 @@ To combat this global pandemic, German government had implemented numerous strat
  - A lockdown started from March 22 2020 to June 16 2020.
  - Corona-Warn-App operated on June 16 used to trace and warn users when they have been contact with someone has test positive for COVID-19.
  - Curfew and lockdown started on November 2 2020 to January 6 2021.
- - Promote German vaccination programs
+ - Promote German vaccination programs 
 
-### Vaccination
+## Vaccination
 
 Vaccination is effective preventing people from getting seriously ill or dying from COVID-19 (WHO,2021). 
 The graph below illustrates Germany's daily vaccination injection.
@@ -197,7 +193,6 @@ p2 <- ggplot(Vac,
 
 ggplotly(p2)
 ```
-
 From the graph we can see:
 
  - The vaccination injection started from Dec 2020
@@ -205,7 +200,7 @@ From the graph we can see:
  - There was a decrease trend since June 2021 until now.
  
  FACT:
- By June 2021: 55% German citizen had their first COVID injection, 35% were fully injected.
+ By June 2021: 55% German citizen had their first COVID injection, 35% were fully injected. (Bosen, 2021)
  
 
 
