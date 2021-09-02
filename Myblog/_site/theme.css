@@ -1,0 +1,50 @@
+
+thead {
+  background-color: #5A91A3;
+  color: white;
+}
+
+html {
+  /*-- Main font sizes --*/
+  --title-size:      50px;
+  --body-size:       1.06rem;
+  --code-size:       14px;
+  --aside-size:      12px;
+  --fig-cap-size:    13px;
+  /*-- Main font colors --*/
+  --title-color:     #5A91A3;
+  --header-color:    #5A91A3;
+  --body-color:      #3F4061;
+  --aside-color:     #2D2424;
+  --fig-cap-color:   #2D2424;
+  /*-- Specify custom fonts ~~~ must be imported above   --*/
+  --heading-font:    "Cabin", sans-serif;
+  --mono-font:       "Ubuntu Mono", monospace;
+  --body-font:       "Raleway", sans-serif;
+  --navbar-font:     "Cabin", sans-serif;  /* websites + blogs only */
+} font-weight: bold;
+}
+
+table{
+  width:100%
+}
+
+
+.distill-site-header {
+  --title-size:       18px;
+  --text-color:       #DAF7A6;
+  --text-size:        15px;
+  --hover-color:      white;
+  --bkgd-color:       #D99CB0;
+}
+
+.distill-site-footer {
+  --text-color:       #DAF7A6;
+  --text-size:        15px;
+  --hover-color:      white;
+  --bkgd-color:       #D99CB0;
+}
+
+p{
+  color:#3F4061 ;
+}

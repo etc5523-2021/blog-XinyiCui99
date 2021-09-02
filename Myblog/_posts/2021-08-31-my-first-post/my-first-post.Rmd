@@ -1,14 +1,14 @@
 ---
-title: "COVID19 in Germany"
+title: "COVID-19 in Germany"
 description: |
   This post is about COVID19 in Germany
 author:
   - name: Xinyi Cui
-    url: https://example.com/norajones
 date: 08-31-2021
 output:
   distill::distill_article:
     self_contained: false
+    theme: theme.css
 ---
 
 
@@ -21,27 +21,6 @@ library(DT)
 library(plotly)
 library(sparkline)
 library(lubridate)
-```
-
-```{css ,echo = FALSE}
-h1{
-  color:  #5A91A3 ;
-  font-size: 45px;
-  font-family:"Times New Roman", Times, serif;
-}
-h2{
-  color: #5A91A3 ;
-  font-size: 18px;
-  font-family:"Times New Roman", Times, serif;
-}
-thead {
-  background-color: #006DAE;
-  color: white;
-}
-
-table{
-  width:100%
-}
 ```
 
 
