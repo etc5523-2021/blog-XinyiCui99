@@ -4,6 +4,22 @@ thead {
   color: white;
 }
 
+.distill-site-header {
+  --title-size:       20px;
+  --text-color:       #DAF7A6;
+  --text-size:        15px;
+  --hover-color:      white;
+  --bkgd-color:       #D99CB0;
+}
+
+.distill-site-footer {
+  --title-size:       18px;
+  --text-color:       #DAF7A6;
+  --text-size:        15px;
+  --hover-color:      white;
+  --bkgd-color:       #D99CB0;
+}
+
 html {
   /*-- Main font sizes --*/
   --title-size:      45px;
@@ -22,28 +38,10 @@ html {
   --mono-font:       "Ubuntu Mono", monospace;
   --body-font:       "Raleway", sans-serif;
   --navbar-font:     "Cabin", sans-serif;  /* websites + blogs only */
-} font-weight: bold;
+} 
+font-weight: bold;
 }
 
-table{
-  width:200%
-}
-
-
-.distill-site-header {
-  --title-size:       18px;
-  --text-color:       #DAF7A6;
-  --text-size:        15px;
-  --hover-color:      white;
-  --bkgd-color:       #D99CB0;
-}
-
-.distill-site-footer {
-  --text-color:       #DAF7A6;
-  --text-size:        15px;
-  --hover-color:      white;
-  --bkgd-color:       #D99CB0;
-}
 
 p{
   color:#3F4061 ;

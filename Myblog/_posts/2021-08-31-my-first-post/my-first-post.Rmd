@@ -8,9 +8,8 @@ date: 08-31-2021
 output:
   distill::distill_article:
     self_contained: false
-    theme: theme.css
+    css: theme.css
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -80,7 +79,8 @@ The variables used are from authoritative data sources:
 
 ## Numeric summary statistics
 
-The table below are the numeric summary statistics for **new_cases**, **new_deaths**, **daily_recover** and **daily_vaccination**.
+The table below are the numeric summary statistics of mean, maximum and standard deviation for **new_cases**, **new_deaths**, **daily_recover** and **daily_vaccination**.
+
 
 ```{r}
 numerical <- data.frame(
@@ -99,11 +99,10 @@ numerical <- data.frame(
           round(sd(Germany$daily_vaccination, na.rm = TRUE)))
 )
 
-numerical %>% 
-kable(caption = "Statistics summary for new cases and new deaths" ) %>% 
-   kable_styling(bootstrap_options = c("striped","hover"))
+datatable(numerical, 
+          caption= "Statistics summary for new cases and new deaths",
+          options = list(pageLength = 4))
 ```
-
 
 # Analysis: Trend in the table
 
