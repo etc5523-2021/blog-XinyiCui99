@@ -122,8 +122,8 @@ trend <- Germany %>%
 
  datatable(trend, 
            escape = FALSE,
-           caption = "Trend of new case case recovery and vaccincation by month in Germany",
-            colnames = c("Year","Month", "New Cases", "New Death", "Dailt recovery", "Daily vaccination"),
+           caption = "Trend of confirmed cases, deaths, recovery and vaccincation by month in Germany",
+            colnames = c("Year","Month", "New Cases", "Confirmed Death", "Daily recovery", "Daily vaccination"),
             options = list(fnDrawCallback = 
             htmlwidgets::JS('function(){HTMLWidgets.staticRender();}'))) %>% 
     spk_add_deps() 
