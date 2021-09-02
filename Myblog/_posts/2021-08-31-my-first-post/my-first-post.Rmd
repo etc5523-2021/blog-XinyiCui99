@@ -19,6 +19,8 @@ library(tidycovid19)
 library(kableExtra)
 library(DT)
 library(plotly)
+library(sparkline)
+library(lubridate)
 ```
 
 ```{css ,echo = FALSE}
@@ -36,6 +38,10 @@ thead {
   background-color: #006DAE;
   color: white;
 }
+
+table{
+  width:100%
+}
 ```
 
 
@@ -52,8 +58,8 @@ According to the World Health Organisation (WHO), COVID-19 is the disease caused
 
 Germany is a developed high income Western European country. Germany has the world's oldest universal health care system. (Health Care Systems in Transition: Germany,2000)
 
-# Data
-## Data description
+
+# Data description
 
 The data comes from the **tidycovid19** package hosted on [Github](https://github.com/joachim-gassen/tidycovid19), which provides transparent and various data sources at the country-day level. In this post only 6 out of 35 variables are included for the analysis. The table below is the variables and there corresponding description.
 
@@ -84,7 +90,7 @@ datatable(data_description, options = list(pageLength = 5), class = "cell-border
           caption = "Variable and variable description")
 ```
 
-## Data source
+# Data source
 
 The variables used are from authoritative data sources:
 
@@ -97,7 +103,7 @@ The variables used are from authoritative data sources:
 
 # Numeric summary statistics
 
-The table below are the numeric summary statistics for **new_cases**, **new_deaths** and **daily_recover**.
+The table below are the numeric summary statistics for **new_cases**, **new_deaths**, **daily_recover** and **daily_vaccination**.
 
 ```{r}
 numerical <- data.frame(
@@ -121,9 +127,42 @@ kable(caption = "Statistics summary for new cases and new deaths" ) %>%
    kable_styling(bootstrap_options = c("striped","hover"))
 ```
 
+#Analysis
+
+## Trend in the table
+
+```{r}
+trend <- Germany %>% 
+  mutate(year = year(date),
+         month = month(date)) %>% 
+  group_by(year,month) %>% 
+  summarise(new_cases = spk_chr(new_cases,
+                                type = "line"),
+            new_deaths = spk_chr(new_deaths,
+                                 type = "line"),
+            daily_recover = spk_chr(daily_recover,
+                                 type = "line"),
+            daily_vaccination = spk_chr(daily_vaccination,
+                                 type = "line")) 
+
+ datatable(trend, 
+           escape = FALSE,
+           caption = "Trend of new case case recovery and vaccincation by month in Germany",
+            colnames = c("Year","Month", "New Cases", "New Death", "Dailt recovery", "Daily vaccination"),
+            options = list(fnDrawCallback = 
+            htmlwidgets::JS('function(){HTMLWidgets.staticRender();}'))) %>% 
+    spk_add_deps() 
+```
+
+This table includes Daily cases, death, recovery and vaccination by month and year in Germany.
+You can search by year or month which is really convenient to see the trend for each month in Germany.
 
 
-## Daily trend in Germany
+
+## Daily cases trend in Germany
+
+After the general view of the COVID19 situation in Germany, Let's have a closer look in the daily cases trend.
+
 ```{r fig.width=60, fig.height=5}
 p1 <- ggplot(Germany,
        aes(x = date,
@@ -147,12 +186,49 @@ The graph above is the trend for daily new cases in Germany from 2020-01-23.
 - There is a possibility to have the fourth COVID breakout from August 2021.
 
 
-# German Government policy to combat COVID19
+## Government policy
+
+To combat this global pandemic, German government had implemented numerous strategies and policies. 
 
  - A lockdown started from March 22 2020 to June 16 2020.
- - Corona-Warn-App operated on June 16 used to trace and warn users when they have been contact with someone has test positive for COVID19
- - Curfew and lockdown started on November 2 2020 to January 6 2021
- - June 2021: 55% German citizen had their first COVID injection, 35% were fully injected
+ - Corona-Warn-App operated on June 16 used to trace and warn users when they have been contact with someone has test positive for COVID-19.
+ - Curfew and lockdown started on November 2 2020 to January 6 2021.
+ - Promote German vaccination programs
+
+### Vaccination
+
+Vaccination is effective preventing people from getting seriously ill or dying from COVID-19 (WHO,2021). 
+The graph below illustrates Germany's daily vaccination injection.
+
+```{r fig.width=60, fig.height=5}
+Vac <- Germany %>% 
+  select(c(date, daily_vaccination)) %>% 
+  na.omit
+
+p2 <- ggplot(Vac,
+       aes(x = date,
+           y = daily_vaccination))+
+  geom_line()+
+  ggtitle("Daily vaccination injected in Germany")+
+  scale_x_date(date_breaks = "60 days",date_labels = "%y-%m-%d")+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle=20, hjust = 1))+
+  scale_y_continuous(labels = scales::comma)+
+  labs(x = "Date", y = "Daily vaccination injected")
+
+ggplotly(p2)
+```
+
+From the graph we can see:
+
+ - The vaccination injection started from Dec 2020
+ - It has a slow increase trend until April 2021, a giant increase in vaccination to Jun 2021.
+ - There was a decrease trend since June 2021 until now.
+ 
+ FACT:
+ By June 2021: 55% German citizen had their first COVID injection, 35% were fully injected.
+ 
+
 
 
 
@@ -163,9 +239,17 @@ The graph above is the trend for daily new cases in Germany from 2020-01-23.
  C. Sievert. Interactive Web-Based Data Visualization with R, plotly, and shiny. Chapman and Hall/CRC
   Florida, 2020.
 
+ Garrett Grolemund, Hadley Wickham (2011). Dates and Times Made Easy with lubridate. Journal of Statistical Software,
+  40(3), 1-25. URL https://www.jstatsoft.org/v40/i03/.
+
  Hao Zhu (2021). kableExtra: Construct Complex Table with 'kable' and Pipe Syntax. R package version
   1.3.4. https://CRAN.R-project.org/package=kableExtra
 
+ Joachim Gassen (2021). tidycovid19: Download, Tidy and Visualize Covid-19 Related Data. R package version 0.0.0.9000.
+
+ Ramnath Vaidyanathan, Kent Russell and Gareth Watts (2016). sparkline: 'jQuery' Sparkline 'htmlwidget'. R package
+  version 2.0.
+ 
  Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
   https://doi.org/10.21105/joss.01686
 
@@ -178,3 +262,8 @@ https://www.dw.com/en/chronology-how-covid-has-spread-in-germany/a-58026877
   
  Health Care Systems in Transition: Germany (PDF). European Observatory on Health Care Systems. 2000. p. 8. Archived (PDF) from the original on 13 May 2011.
 
+ World Health Organization. (2021). COVID-19 advice for the public: Getting vaccinated
+ https://www.who.int/emergencies/diseases/novel-coronavirus-2019/covid-19-vaccines/advice
+ 
+ World Health Organization. (2020). Coronavirus disease (COVID-19)
+ https://www.who.int/emergencies/diseases/novel-coronavirus-2019/question-and-answers-hub/q-a-detail/coronavirus-disease-covid-19
