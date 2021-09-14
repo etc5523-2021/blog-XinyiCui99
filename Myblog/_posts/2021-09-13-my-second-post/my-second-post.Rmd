@@ -26,7 +26,8 @@ library(DT)
 # Introduction
 
 This blog explored the status of the world largest economies and well-developed country United States in combating the COVID-19 pandemic. 
-
+![](covid19usa.jpeg)
+Source:Dennis Thompson, Healthday Reporter
 
 # Data description
 
@@ -54,9 +55,9 @@ data_description <- data.frame(Variables = names(owid_covid_data),
 datatable(data_description, options = list(pageLength = 5), class = "cell-border stripe",
           caption = "Variable and variable description")
 ```
-# United States and Covid
+# United States and COVID-19
 
-To explore the key aspects in terms of the daily confirmed cases, daily confirmed deaths cases and daily hospital cases over time in the US.
+To have an overview of the impact of COVID-19 in the United States, first by exploring the key aspects in terms of the daily confirmed cases, daily confirmed deaths cases and daily hospital cases over time.
 
 ```{r}
 trend1 <- owid_covid_data %>%
@@ -81,12 +82,18 @@ p1 <- ggplot(trend1, aes(x = date,
        title = "Number of daily confirmed new, death and hospital cases")+
   scale_x_date(date_breaks = "60 days",date_labels = "%d-%m-%Y")+
   scale_y_continuous(labels = ~scales::number(.,big.mark = ","))+
-  scale_fill_manual(values=colors)+
   theme_minimal()+
-  theme(axis.text.x = element_text(angle=20, hjust = 1))
+  theme(axis.text.x = element_text(angle=20, hjust = 1),
+        legend.key = element_rect(fill = "grey", color = "colors"),
+        legend.background = element_rect(fill = "#BCE4EC",
+                                         color = "#ADBFC3",
+                                         linetype = "dashed"),
+        legend.title = element_text(margin = margin(b = "2px")))
 
 ggplotly(p1)
 ```
+
+From the graph there are some interesting findings:
 
 New Cases:
 - US is experiencing the second major wave of confirmed new cases.
@@ -103,10 +110,11 @@ New hospital:
 
 # Vaccinations in United States
 ![](vaccine.jpeg)
-United States has the world leading position in health care, medical treatment and pharmaceuticals markets (Pharmapproach,2020)
+Source: Reuters. (2020)
 
-There are three authorized and recommended vaccines in US. They are **BioNTech, Pfizer vaccine**, **Johnson & Johnson vaccine** and **Moderna, NIAID vaccine**. (CDC, 2021) According to the Centers for Disease Control and Prevention USA, that all these are safe, effective and reduce the risk of severe illness caused by Covid-19. More information about US vaccination [here](https://www.cdc.gov/coronavirus/2019-ncov/vaccines/index.html).
+United States has the world leading position in health care, medical treatment and pharmaceuticals markets. (Pharmapproach,2020) There are currently three authorized and recommended vaccines in US. They are **BioNTech, Pfizer vaccine**, **Johnson & Johnson vaccine** and **Moderna, NIAID vaccine**. (CDC, 2021) According to the Centers for Disease Control and Prevention USA, that all these are safe, effective and reduce the risk of severe illness caused by Covid-19. More information about US vaccination [here](https://www.cdc.gov/coronavirus/2019-ncov/vaccines/index.html).
 
+Let's look at the vaccine injection progress in the US
 
 ```{r}
 vacc <- owid_covid_data %>% 
@@ -140,7 +148,8 @@ animate(plot = vacc,
 anim_save("out.gif")
 ```
 
-This animation demonstrates the vaccination status in the US, with light blue represents people who had vaccinated at lease 1 dose, dark blue of people who had been fully vaccinated.
+This animation demonstrates the vaccination status in the US, with light blue represents people who had vaccinated at lease 1 dose, dark blue of people who had been fully vaccinated. There is a positive trend over time. To incorporate the number of daily confirmed new, death and hospital cases graph, that even US is experiencing the third wave of coronavirus, while the number of death and patients in hospital are lower than previous waves. This may due to the high number of injected vaccines.
+
 
 # Reference
 
@@ -172,5 +181,8 @@ COVID-19 (2021). Centers for Disease Control and Prevention https://www.cdc.gov/
 Pharmapproach. (2020). 15 Astonishing Statistics and Facts about U.S. Pharmaceutical Industry
 https://www.pharmapproach.com/15-astonishing-statistics-and-facts-about-u-s-pharmaceutical-industry/
 
-Reuters. (2020)
+Reuters. (2020).
 https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.scmp.com%2Fnews%2Fhong-kong%2Fhealth-environment%2Farticle%2F3112220%2Fhong-kong-raise-fine-breaking-social-distancing&psig=AOvVaw0vEB2ZuuP3vUDxS0_VBCyS&ust=1631717322042000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKjBye7a_vICFQAAAAAdAAAAABAD
+
+Thompson. D., (2020). COVID-19 causing more stress in America than other nations, survey shows
+https://medicalxpress.com/news/2020-08-covid-stress-america-nations-survey.html
