@@ -30,89 +30,33 @@ This blog explored the status of the world largest economies and well-developed 
 
 # Data description
 
-The data comes from **Our World in Data** on [github](https://github.com/owid/covid-19-data/tree/master/public/data/). The table below is the variables and there corresponding description.
+The data comes from **Our World in Data** on [github](https://github.com/owid/covid-19-data/tree/master/public/data/). The table below is the variables and there corresponding description used for this blog.
 
 ```{r}
-owid_covid_data <- readr::read_csv("data/owid-covid-data.csv")
+owid_covid_data <- readr::read_csv("data/owid-covid-data.csv") %>% 
+  filter(location == "United States") %>% 
+  select(c(location:new_cases,total_deaths:new_deaths,hosp_patients, total_vaccinations:people_fully_vaccinated))
 ```
 
 ```{r}
 data_description <- data.frame(Variables = names(owid_covid_data),
-                               Description = c("Country code",
-                                               "Location of continent",
-                                               "Country full name",
+                               Description = c("Country full name",
                                                "Date of data recorded",
                                                "Number of total confirmed cases",
                                                "New cases recorded on the date",
-                                               "New confirmed cases of COVID-19 (7-day smoothed)",
                                                "Number of total confirmed death cases",
                                                "New deaths recored on the date",
-                                               "New deaths attributed to COVID-19 (7-day smoothed)",
-                                               "Number of totalconfirmed cases per million",
-                                               "Number of new recored confirmed cases per million",
-                                               "New confirmed cases of COVID-19 (7-day smoothed) per million",
-                                               "Number of totalconfirmed death cases per million",
-                                               "Number of new recored confirmed death cases per million",
-                                               "New deaths attributed to COVID-19 (7-day smoothed) per million",
-                                               "Real-time estimate of the effective reproduction rate (R) of COVID-19.",
-                                               "Number of ICU patients",
-                                               "NUmber of ICU patients per million people",
                                                "Number of COVID-19 patients in hospital on a given day",
-                                               "Number of COVID-19 patients in hospital on a given day per 1,000,000 people",
-                                               "Number of COVID-19 patients newly admitted to intensive care units (ICUs) in a given week",
-                                               "Number of COVID-19 patients newly admitted to intensive care units (ICUs) in a given week per 1,000,000 people",
-                                               "Number of COVID-19 patients newly admitted to hospitals in a given week",
-                                               "Number of COVID-19 patients newly admitted to hospitals in a given week per 1,000,000 people",
-                                               "New tests for COVID-19 (only calculated for consecutive days)",
-                                               "Total tests for COVID-19",
-                                               "Total tests for COVID-19 per 1,000 people",
-                                               "New tests for COVID-19 per 1,000 people",
-                                               "New tests for COVID-19 (7-day smoothed)",
-                                               "New tests for COVID-19 (7-day smoothed) per 1,000 people",
-                                               "The share of COVID-19 tests that are positive, given as a rolling 7-day average (this is the inverse of tests_per_case)",
-                                               "Tests conducted per new confirmed case of COVID-19, given as a rolling 7-day average (this is the inverse of positive_rate)",
-                                               "Units used by the location to report its testing data",
                                                "Total number of COVID-19 vaccination doses administered",
                                                "Total number of people who received at least one vaccine dose",
-                                               "Total number of people who received all doses prescribed by the vaccination protocol",
-                                               "Total number of COVID-19 vaccination booster doses administered (doses administered beyond the number prescribed by the vaccination protocol)",
-                                               "New COVID-19 vaccination doses administered (only calculated for consecutive days)",
-                                               "New COVID-19 vaccination doses administered (7-day smoothed).",
-                                               "Total number of COVID-19 vaccination doses administered per 100 people in the total population",
-                                               "Total number of people who received at least one vaccine dose per 100 people in the total population",
-                                               "Total number of people who received all doses prescribed by the vaccination protocol per 100 people in the total population",
-                                               "Total number of COVID-19 vaccination booster doses administered per 100 people in the total population",
-                                               "New COVID-19 vaccination doses administered (7-day smoothed) per 1,000,000 people in the total population",
-                                               "Government Response Stringency Index: composite measure based on 9 response indicators including school closures, workplace closures, and travel bans, rescaled to a value from 0 to 100 (100 = strictest response)",
-                                               "Population in 2020",
-                                               "Number of people divided by land area, measured in square kilometers, most recent year available",
-                                               "Median age of the population, UN projection for 2020",
-                                               "Share of the population that is 65 years and older, most recent year available",
-                                               "Share of the population that is 70 years and older in 2015",
-                                               "Gross domestic product at purchasing power parity (constant 2011 international dollars), most recent year available",
-                                               "Share of the population living in extreme poverty, most recent year available since 2010",
-                                               "Death rate from cardiovascular disease in 2017 (annual number of deaths per 100,000 people)",
-                                               "Diabetes prevalence (% of population aged 20 to 79) in 2017",
-                                               "Share of women who smoke, most recent year available",
-                                               "Share of men who smoke, most recent year available",
-                                               "Share of the population with basic handwashing facilities on premises, most recent year available",
-                                               "Hospital beds per 1,000 people, most recent year available since 2010",
-                                               "Life expectancy at birth in 2019",
-                                               "A composite index measuring average achievement in three basic dimensions of human development—a long and healthy life, knowledge and a decent standard of living.",
-                                               "Excess mortality P-scores for all ages"))
+                                               "Total number of people who received all doses prescribed by the vaccination protocol"))
 
-datatable(data_description, options = list(pageLength = 8), class = "cell-border stripe",
+datatable(data_description, options = list(pageLength = 5), class = "cell-border stripe",
           caption = "Variable and variable description")
 ```
 # United States and Covid
 
 To explore the key aspects in terms of the daily confirmed cases, daily confirmed deaths cases and daily hospital cases over time in the US.
-
-```{r}
- owid_covid_data %>% 
-  filter(location == "United States")
-```
-
 
 ```{r}
 trend1 <- owid_covid_data %>%
@@ -158,9 +102,7 @@ New hospital:
 
 
 # Vaccinations in United States
-
 ![](vaccine.jpeg)
-
 United States has the world leading position in health care, medical treatment and pharmaceuticals markets (Pharmapproach,2020)
 
 There are three authorized and recommended vaccines in US. They are **BioNTech, Pfizer vaccine**, **Johnson & Johnson vaccine** and **Moderna, NIAID vaccine**. (CDC, 2021) According to the Centers for Disease Control and Prevention USA, that all these are safe, effective and reduce the risk of severe illness caused by Covid-19. More information about US vaccination [here](https://www.cdc.gov/coronavirus/2019-ncov/vaccines/index.html).
@@ -225,6 +167,10 @@ Yihui Xie, Joe Cheng and Xianying Tan (2021). DT: A Wrapper of the JavaScript Li
 
 ## Sources
 
-https://www.cdc.gov/coronavirus/2019-ncov/vaccines/different-vaccines.html
+COVID-19 (2021). Centers for Disease Control and Prevention https://www.cdc.gov/coronavirus/2019-ncov/vaccines/different-vaccines.html
 
+Pharmapproach. (2020). 15 Astonishing Statistics and Facts about U.S. Pharmaceutical Industry
 https://www.pharmapproach.com/15-astonishing-statistics-and-facts-about-u-s-pharmaceutical-industry/
+
+Reuters. (2020)
+https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.scmp.com%2Fnews%2Fhong-kong%2Fhealth-environment%2Farticle%2F3112220%2Fhong-kong-raise-fine-breaking-social-distancing&psig=AOvVaw0vEB2ZuuP3vUDxS0_VBCyS&ust=1631717322042000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKjBye7a_vICFQAAAAAdAAAAABAD
