@@ -10,7 +10,7 @@ This assessment is due Fri Sep 3 2021 11.55PM AEST.
 
 My selected country is [Germany].
 
-The relevant blog post for this assessment is in https://xinyi-cui-blog.netlify.app/
+The relevant blog post for this assessment is in https://xinyi-cui-blog.netlify.app/posts/2021-08-31-my-first-post/
 
 - [ ] Selected a country
 - [ ] Website with R markdown 
@@ -28,7 +28,7 @@ This assessment is due Fri Sep 17 2021 11.55PM AEST.
 
 My selected country is [United States].
 
-The relevant blog post for this assessment is in [FILL].html
+The relevant blog post for this assessment is in https://xinyi-cui-blog.netlify.app/posts/2021-09-13-my-second-post/
 
 - [ ] Selected a new country
 - [ ] Data Story 1
