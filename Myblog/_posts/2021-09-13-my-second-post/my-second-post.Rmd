@@ -96,14 +96,17 @@ ggplotly(p1)
 From the graph there are some interesting findings:
 
 New Cases:
+
 - US is experiencing the second major wave of confirmed new cases.
 - On 02 Jan 2021, the daily confirmed cases reached the peak of **300462** cases.
 
 New death:
+
 - In general, there is a positive relationship between confirmed daily cases and daily confirmed deaths.
 - The first wave of death started from April 2020 while the confirmed cases were relatively low.
 
 New hospital:
+
 - The negative cases of **new_hospital** represented people who no longer need to be monitored in the hospital
 - The number of people in hospital was very high, as may people were panicking about the COVID-19.
 
