@@ -81,7 +81,7 @@ p1 <- ggplot(trend1, aes(x = date,
        y = "Number of cases",
        title = "Number of daily confirmed new, death and hospital cases")+
   scale_x_date(date_breaks = "60 days",date_labels = "%d-%m-%Y")+
-  scale_y_continuous(labels = ~scales::number(.,big.mark = ","))+
+  scale_y_continuous(labels = scales::comma)+
   theme_minimal()+
   theme(axis.text.x = element_text(angle=20, hjust = 1),
         legend.key = element_rect(fill = "grey", color = "colors"),
@@ -140,8 +140,7 @@ vacc <- owid_covid_data %>%
            label = "people fully vaccinated",
            color = "#47A4B8") +
   scale_x_date(date_breaks = "60 days",date_labels = "%d-%m-%Y")+
-  scale_y_continuous(labels = ~scales::number(.,big.mark = ","))+
-  theme(axis.text.x = element_text(angle=20, hjust = 1)) +
+  scale_y_continuous(labels = scales::comma)+
   theme_minimal()+
   transition_reveal(date)
 
